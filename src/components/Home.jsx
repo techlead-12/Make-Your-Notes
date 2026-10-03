@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -42,6 +42,13 @@ const Home = () => {
     const [pasteType, setPasteType] = useState(selectedPaste?.type ?? 'text');
     const [language, setLanguage] = useState(selectedPaste?.language ?? 'javascript');
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setTitle(selectedPaste?.title ?? '');
+        setValue(selectedPaste?.content ?? '');
+        setPasteType(selectedPaste?.type ?? 'text');
+        setLanguage(selectedPaste?.language ?? 'javascript');
+    }, [selectedPaste]);
 
     async function formatCode() {
         if (pasteType !== 'code' || !value.trim()) {
